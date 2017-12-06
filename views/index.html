@@ -1,58 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="../socket.io/socket.io.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script>
-        var socket = io.connect("http://localhost:8080");
-
-        socket.on('connection-registered', function(data) {
-            // Setup the event handler.
-            $("[name='chat-form']").submit(function(e) {
-                e.preventDefault();
-
-                var message = $("[name='message']").val();
-
-                socket.emit('message', {
-                    message: message
-                })
-            });
-
-            console.log('We were successfully registered');
-        });
-
-        socket.on('message', function(message) {
-            var copy = $('.chat-message-block-starter').clone();
-
-            copy.removeClass('hidden').removeClass('chat-message-block-starter');
-            copy.text(message.message);
-
-            $('#chat-messages-panel').append(copy);
-        });
-    </script>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Chatroom!</title>
 </head>
 <style type="text/css">
-    #chat-messages-panel {
-        min-height: 500px;
-        overflow-y: auto;
-        border: 1px solid black;
-    }
-
-    .chat-message-block-starter {
-        display: none;
-    }
 </style>
 <body>
     <div>
-        <div id="chat-messages-panel">
-            <div class="chat-message-block chat-message-block-starter"></div>
-        </div>
-        <form name="chat-form">
-            <input type="text" name="message" />
+        <form name="chat-form" method="POST" action="/join">
+            <label for="alias">Alias: </label>
+            <input type="text" maxlength="50" id="alias" name="alias" />
             <button type="submit">
-                Send
+                Join
             </button>
         </form>
     </div>
